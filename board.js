@@ -2,8 +2,7 @@
 	var N = root.N = (root.N || {});
 	var Board = N.Board = function (size, oldBoard, direction) {
 		this.size = size;
-		this.oldBoard = oldBoard;
-		this.cells = oldBoard ? this.oldBoard.cells : this.emptyBoard();
+		this.cells = oldBoard ? oldBoard.cells : this.emptyBoard();
 		
 		
 		// this.oldCells = oldBoard.cells;
@@ -21,14 +20,6 @@
 		}
 		return cellsString;
 	};
-	// 
-	// Board.prototype.populateGrid = function (oldBoard) {
-	// 	if (oldBoard === undefined) {
-	// 		return new Array( new Array(4) );
-	// 	} else {
-	// 		this.cells = oldBoard.cells;
-	// 	}
-	// }
 	
 	Board.prototype.emptyBoard = function () {
 		var cells = [];
@@ -71,7 +62,7 @@
 	
 	Board.prototype.moveCellsHorizontal = function (reverse) {
 		for (var i = 0; i < this.size; i++) {
-			this.cells[i] = this.merge(this.oldBoard.cells[i], reverse);
+			this.cells[i] = this.merge(this.cells[i], reverse);
 		}
 	};
 	
@@ -79,16 +70,23 @@
 		var newRow = [];
 		oldRow = reverse ? _.compact(oldRow).reverse() : _.compact(oldRow);
 		for (var i = 0; i < oldRow.length - 1; i++) {
-			if (oldRow[i].value === oldRow[i + 1].value) {
+			if (this.canMerge(oldRow[i], oldRow[i + 1])) {
 				newRow.push(new N.Cell(oldRow[i].value * 2));
 			} else {
 				newRow.push(oldRow[i]);
 			}
 		}
-		var newRow = reverse ? newRow.reverse() : newRow;
 		
-		return newRow.concat(new Array(4 - newRow.length));
+		for (var i = newRow.length; i < this.size; i++) {
+			newRow.push(new N.Cell(2));
+		}
+		// debugger		
+		return reverse ? newRow.reverse() : newRow;
 	};
+	
+	Board.prototype.canMerge = function (cell1, cell2) {
+		return cell1.value >= 2 && (cell1.value === cell2.value);
+	}
 
 	
 })(this);
