@@ -1,0 +1,14 @@
+#board {
+	margin: 30px auto;
+	width: 500px;
+	height: 500px;
+	border: 3px solid black;
+}
+
+.cell {
+	width: 125px;
+	height: 125px;
+	outline: 2px solid black;
+	float: left;
+	text-align: center;
+}

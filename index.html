@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="jquery.js"></script>
+		<script src="underscore.js"></script>
+		<script src="cell.js"></script>
+		<script src="board.js"></script>
+		<script src="game.js"></script>
+		<link rel="stylesheet" href="style.css" text="text/css">
+		<title>-2048</title>
+	</head>
+
+	<body>
+		<div id="board"></div>
+		<script>
+			var game = new N.Game($('#board'));
+			game.board.setCell(2,2,2);
+			game.start();
+		</script>
+	</body>
+</html>
