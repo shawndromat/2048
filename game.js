@@ -2,7 +2,7 @@
 	var N = root.N = (root.N || {} );
 	var Game = N.Game = function ($rootEl) {
 		this.$rootEl = $rootEl;
-		this.board = new N.Board(4, undefined, undefined);
+		this.board = new N.Board(4, new N.Board(4, undefined, undefined), undefined);
 		this.score = 0;
 	};
 	
@@ -12,12 +12,18 @@
 	};
 	
 	Game.prototype.registerHandlers = function () {
-		var game = this;
-		key('up', this.board.move.bind(this, "up", this.render));
-		key('down', this.board.move.bind(this, "down", this.render));
-		key('left', this.board.move.bind(this, "left", this.render));
-		key('right', this.board.move.bind(this, "right", this.render));
+		key('up', this.handler("up"));
+		key('down', this.handler("down"));
+		key('left', this.handler("left"));
+		key('right', this.handler("right"));
 	};
+	
+	Game.prototype.handler = function (direction) {
+		var game = this;
+		return function () {
+			game.board = game.board.move(direction, game.render.bind(game));
+		}
+	}
 	
 	// Game.prototype.move = function (direction) {
 	// 	var game = this;

@@ -1,9 +1,10 @@
 (function (root){
 	var N = root.N = (root.N || {});
 	var Board = N.Board = function (size, oldBoard, direction) {
-		this.size = size
-		this.cells = oldBoard ? [] : this.emptyBoard();;
-		this.oldBoard = this.oldBoard;
+		this.size = size;
+		this.oldBoard = oldBoard;
+		this.cells = oldBoard ? this.oldBoard.cells : this.emptyBoard();
+		
 		
 		// this.oldCells = oldBoard.cells;
 		this.direction = direction;
@@ -37,12 +38,15 @@
 				cells[i].push(new N.Cell())
 			}
 		}
+		cells[2][2] = new N.Cell(2);
+		cells[2][1] = new N.Cell(2);
 		return cells;
 	};
 	
-	Board.prototype.setCell = function (x, y, value) {
-		this.cells[x][y] = new N.Cell(value);
-	};
+	// Board.prototype.setCell = function (x, y, value) {
+	// 	this.cells = this.oldBoard.cells;
+	// 	this.cells[x][y] = new N.Cell(value);
+	// };
 	
 	Board.prototype.move = function (direction, callback) {
 		var board = this;
@@ -54,26 +58,27 @@
 			board.moveCellsVertical(true);
 			break;
 		case "left":
-			board.moveCells(false);
+			board.moveCellsHorizontal(false);
 			break;
 		case "right":
-			board.moveCells(true);
+			board.moveCellsHorizontal(true);
 			break;
 		}
-
+		console.log(this.cells);
 		callback();
+		return this;
 	};
 	
-	Board.prototype.moveCells = function (reverse) {
+	Board.prototype.moveCellsHorizontal = function (reverse) {
 		for (var i = 0; i < this.size; i++) {
-			this.cells.push(this.merge(oldCells[i]));
+			this.cells[i] = this.merge(this.oldBoard.cells[i], reverse);
 		}
 	};
 	
 	Board.prototype.merge = function (oldRow, reverse) {
 		var newRow = [];
-		oldRow = reverse ? oldRow._compact().reverse() : oldRow._compact();
-		for (var i = 0; i < row.length - 1; i++) {
+		oldRow = reverse ? _.compact(oldRow).reverse() : _.compact(oldRow);
+		for (var i = 0; i < oldRow.length - 1; i++) {
 			if (oldRow[i].value === oldRow[i + 1].value) {
 				newRow.push(new N.Cell(oldRow[i].value * 2));
 			} else {
