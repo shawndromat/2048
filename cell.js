@@ -1,8 +1,6 @@
 (function (root){
 	var N = root.N = (root.N || {});
-	var Cell = N.Cell = function (x, y, value) {
-		this.x = x;
-		this.y = y;
+	var Cell = N.Cell = function (value) {
 		this.value = value || undefined;
 	}
 	
