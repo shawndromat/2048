@@ -16,7 +16,8 @@
 		<div id="board"></div>
 		<script>
 			var game = new N.Game($('#board'));
-			// game.board.setCell(2,2,2);
+			game.board.setCell(2,[2,2]);
+			game.board.setCell(4,[1,2]);
 			game.start();
 		</script>
 	</body>
