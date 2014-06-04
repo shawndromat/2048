@@ -45,7 +45,7 @@
 	color: #776e65;
 }
 
-.cell-8, .cell-16, .cell-32, .cell-64, .cell--2 {
+.cell-8, .cell-16, .cell-32, .cell-64, .cell--2, .cell-128, .cell-256, .cell-512 {
 	color: #f9f6f2;
 }
 
