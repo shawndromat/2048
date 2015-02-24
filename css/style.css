@@ -1,0 +1,127 @@
+#board {
+  margin: 30px auto;
+  width: 500px;
+  height: 500px;
+  background-color: #bbada0;
+  border-radius: 10px;
+  position: relative;
+  z-index: -5; }
+
+.cell {
+  position: absolute;
+  width: 112.5px;
+  height: 112.5px;
+  text-align: center;
+  font-size: 3em;
+  font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+  border-radius: 10px;
+  transition: left .3s ease-in-out, top .3s ease-in-out; }
+
+.cell p {
+  margin-top: 25px; }
+
+.pos-0-0 {
+  left: 10px;
+  top: 10px; }
+
+.pos-0-1 {
+  left: 132.5px;
+  top: 10px; }
+
+.pos-0-2 {
+  left: 255px;
+  top: 10px; }
+
+.pos-0-3 {
+  left: 377.5px;
+  top: 10px; }
+
+.pos-1-0 {
+  left: 10px;
+  top: 132.5px; }
+
+.pos-1-1 {
+  left: 132.5px;
+  top: 132.5px; }
+
+.pos-1-2 {
+  left: 255px;
+  top: 132.5px; }
+
+.pos-1-3 {
+  left: 377.5px;
+  top: 132.5px; }
+
+.pos-2-0 {
+  left: 10px;
+  top: 255px; }
+
+.pos-2-1 {
+  left: 132.5px;
+  top: 255px; }
+
+.pos-2-2 {
+  left: 255px;
+  top: 255px; }
+
+.pos-2-3 {
+  left: 377.5px;
+  top: 255px; }
+
+.pos-3-0 {
+  left: 10px;
+  top: 377.5px; }
+
+.pos-3-1 {
+  left: 132.5px;
+  top: 377.5px; }
+
+.pos-3-2 {
+  left: 255px;
+  top: 377.5px; }
+
+.pos-3-3 {
+  left: 377.5px;
+  top: 377.5px; }
+
+.cell-0 {
+  background-color: #ccc0b3;
+  z-index: -3; }
+
+.cell-2, .cell-4 {
+  color: #776e65; }
+
+.cell-8, .cell-16, .cell-32, .cell-64, .cell--2, .cell-128, .cell-256, .cell-512 {
+  color: #f9f6f2; }
+
+.cell-2 {
+  background-color: #eee4da; }
+
+/* .cell--2 { */
+/* 	background-color: #776e65; */
+/* } */
+.cell-4 {
+  background-color: #ede0c8; }
+
+.cell-8 {
+  background-color: #f1b179; }
+
+.cell-16 {
+  background-color: #f59563; }
+
+.cell-32 {
+  background-color: #f67b5f; }
+
+.cell-64 {
+  background-color: #f65e3b; }
+
+.cell-128 {
+  background-color: #edcf72; }
+
+.cell-256 {
+  background: #edcc61;
+  box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.31746), inset 0 0 0 1px rgba(255, 255, 255, 0.19048); }
+
+.cell-512 {
+  background-color: #edc850;
+  box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.39683), inset 0 0 0 1px rgba(255, 255, 255, 0.2381); }

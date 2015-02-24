@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="js/jquery.js"></script>
+		<script src="js/underscore.js"></script>
+		<script src="js/cell.js"></script>
+		<script src="js/board.js"></script>
+		<script src="js/keymaster.js"></script>
+		<script src="js/game.js"></script>
+		<link rel="stylesheet" href="css/style.css" text="text/css">
+		<title>-2048</title>
+	</head>
+
+	<body>
+		<div id="board"></div>
+    <script>
+      document.addEventListener('DOMContentLoaded',function(){
+        document.removeEventListener('DOMContentLoaded', arguments.callee, false);
+
+        var boardEl = document.getElementById('board');
+        var game = new N.Game(boardEl);
+        game.board.generateNewCell();
+        game.board.generateNewCell();
+        game.start();
+      }, false)
+		</script>
+	</body>
+</html>
