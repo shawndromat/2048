@@ -14,11 +14,16 @@
 
 	<body>
 		<div id="board"></div>
-		<script>
-			var game = new N.Game($('#board'));
-			game.board.setCell(2,[2,2]);
-			game.board.setCell(4,[1,2]);
-			game.start();
+    <script>
+      document.addEventListener('DOMContentLoaded',function(){
+        document.removeEventListener('DOMContentLoaded', arguments.callee, false);
+
+        var boardEl = document.getElementById('board');
+        var game = new N.Game(boardEl);
+        game.board.generateNewCell();
+        game.board.generateNewCell();
+        game.start();
+      }, false)
 		</script>
 	</body>
 </html>

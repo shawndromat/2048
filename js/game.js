@@ -24,9 +24,4 @@
 			game.board = game.board.move(direction);
 		}
 	}
-
-	// Game.prototype.render = function () {
-	// 	this.$rootEl.html(this.board.render());
-	// };
-
 })(this);

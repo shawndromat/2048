@@ -1,78 +1,76 @@
 (function (root){
 	var N = root.N = (root.N || {});
-	var Board = N.Board = function (size, direction, $el) {
+	var Board = N.Board = function (size, direction, el) {
 		this.size = size;
-		this.cells = this.emptyBoard();
 		this.direction = direction;
-		this.$el = $el;
+		this.el = el;
+		this.cells = this.emptyBoard();
+    this.oldCells = [];
 	}
 
 	Board.prototype.render = function () {
-		//todo: create some kind of better template, probably
-		var cellsString = "";
-		for (var i = 0; i < this.size; i++ ) {
-			cellsString += "<div class='row'>"
-			for (var j = 0; j < this.size; j++) {
-				cellsString += this.cells[i][j].render();
-			}
-			cellsString += "</div>"
-		}
-		this.$el.html(cellsString);
+    this.eachCell(function(x, y, cell) {
+      cell.render();
+    })
 	};
 
-	Board.prototype.logCells = function () {
-		for (var i = 0; i < this.size; i++) {
-			for (var j = 0; j < this.size; j++) {
-				if (this.cells[i][j].value > 0) {
-					console.log(this.cells[i][j].pos + " " + this.cells[i][j].value)
-				}
-			}
-		}
-	}
+	Board.prototype.animate = function (initial) {
+    this.eachCell(function(x, y, cell) {
+      cell.animate();
+    })
+	};
 
 	Board.prototype.emptyBoard = function () {
 		var cells = [];
 		for (var i = 0; i < this.size; i++) {
 			cells.push([]);
 			for (var j = 0; j < this.size; j++) {
-				var cell = new N.Cell(0);
-				cell.setPos([i,j]);
+				var cell = new N.Cell(0, this);
+				cell.setPos([i, j]);
 				cells[i].push(cell);
 			}
 		}
 		return cells;
 	};
 
-	Board.prototype.setCell = function (value, pos) {
-		var cell = new N.Cell(value);
-		cell.pos = pos;
-		this.cells[pos[0]][pos[1]] = cell;
-	};
-
 	Board.prototype.move = function (direction) {
 		this.saveCells();
-		var board = this;
+
 		switch (direction) {
 		case "up":
-			board.moveCellsVertical(false);
+			this.moveCellsVertical(false);
 			break;
 		case "down":
-			board.moveCellsVertical(true);
+			this.moveCellsVertical(true);
 			break;
 		case "left":
-			board.moveCellsHorizontal(false);
+			this.moveCellsHorizontal(false);
 			break;
 		case "right":
-			board.moveCellsHorizontal(true);
+			this.moveCellsHorizontal(true);
 			break;
 		}
 
 		this.setCells();
-		this.generateNewCell();
+    this.logCells();
 		this.render();
-		this.logCells();
+    setTimeout(function() {
+      this.animate();
+    }.bind(this), 0)
+    // document.addEventListener('transitionend', this.endMove)
+    setTimeout(function() {
+      this.endMove();
+    }.bind(this), 500);
 		return this;
 	};
+
+  Board.prototype.endMove = function() {
+    for (var i = 0; i < this.oldCells.length; i++) {
+      this.el.removeChild(this.oldCells[i].el);
+    }
+    this.oldCells = [];
+    this.generateNewCell();
+  }
 
 	Board.prototype.moveCellsHorizontal = function (reverse) {
 		if (reverse) {
@@ -113,19 +111,26 @@
 	};
 
 	Board.prototype.canMerge = function (cell1, cell2) {
-		return cell1.value != 0 && (cell1.value === cell2.value)
+		return cell1.value != 0 && (cell1.value === cell2.value);
 	}
 
 	Board.prototype.performMerge = function (cell1, cell2) {
-		var value = Math.abs(cell1.value) * 2;
-		//if opposite signs, value should be negative
-		value = (cell1.value > 0 && cell2.value < 0) ? -value : value;
-		var cell = new N.Cell(value);
-		//cell2's prevPos is furthest from the merging end
-		//give new cell furthest prevPos for maximum animation effect
-		cell.prevPos = cell2.prevPos;
-		return cell;
+    var newCell = new N.Cell(cell1.value + cell2.value, this);
+    this.oldCells.push(cell1);
+    this.el.removeChild(cell2.el);
+    newCell.prevPos = cell2.prevPos;
+		return newCell;
 	};
+
+  Board.prototype.logCells = function () {
+    for (var i = 0; i < this.size; i++) {
+      for (var j = 0; j < this.size; j++) {
+        if (this.cells[i][j].value > 0) {
+          console.log(this.cells[i][j].pos + " " + this.cells[i][j].value)
+        }
+      }
+    }
+  }
 
 	Board.prototype.transpose = function () {
 		var transposed = [];
@@ -146,7 +151,8 @@
 
 	Board.prototype.pad = function(row) {
 		while(row.length < this.size) {
-			row.push(new N.Cell(0));
+      var newCell = new N.Cell(0, this);
+			row.push(newCell);
 		}
 		return row;
 	}
@@ -185,7 +191,8 @@
 
 	Board.prototype.generateNewCell = function () {
 		var newCell = _.sample(this.emptyCells());
-		newCell.value = Math.random() > .5 ? 2 : -2;
+		newCell.value = Math.random() < .75 ? 2 : 4;
+    newCell.render();
 	}
 
 })(this);
