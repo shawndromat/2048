@@ -1,7 +1,14 @@
 $board-width: 500px;
-$gutter: 10px;
+$gutter: 15px;
 $num-cells: 4;
 $cell-width: ($board-width - ($gutter * ($num-cells + 1))) / $num-cells;
+$text-color: #776e65;
+
+html {
+	font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  background-color: #faf8ef;
+  color: $text-color;
+}
 
 #board {
 	margin: 30px auto;
@@ -17,17 +24,46 @@ $cell-width: ($board-width - ($gutter * ($num-cells + 1))) / $num-cells;
   position: absolute;
 	width: $cell-width;
 	height: $cell-width;
-	// float: left;
 	text-align: center;
-	font-size: 3em;
-	font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
-	border-radius: 10px;
-	// margin: $gutter / 2;
-  transition: left .3s ease-in-out, top .3s ease-in-out;
+	font-size: 55px;
+  font-weight: bold;
+	border-radius: 5px;
+  transition: left .1s ease-in-out, top .1s ease-in-out;
 }
 
 .cell p{
-	margin-top: 25px;
+	margin-top: 15px;
+}
+
+header {
+  width: $board-width;
+  margin: 30px auto;
+}
+
+h1 {
+  font-size: 80px;
+  display: inline-block;
+  margin: 0;
+}
+
+#score-wrapper {
+  float: right;
+  background-color: #bbada0;
+  padding: 15px 25px;
+  border-radius: 5px;
+  text-align: center;
+
+  h2 {
+    color: #eee4da;
+    font-size: 13px;
+    margin: 0;
+  }
+
+  p {
+    color: white;
+    font-size: 25px;
+    margin: 0;
+  }
 }
 
 @for $x from 0 through $num-cells - 1 {
@@ -39,21 +75,6 @@ $cell-width: ($board-width - ($gutter * ($num-cells + 1))) / $num-cells;
   }
 }
 
-// .row:first-child .cell {
-// 	margin-top: $gutter;
-// }
-
-// .row:last-child .cell {
-// 	margin-bottom: $gutter;
-// }
-
-// .cell:first-child {
-// 	margin-left: $gutter;
-// }
-
-// .cell:last-child {
-// 	margin-right: $gutter;
-// }
 
 .cell-0 {
 	background-color: #ccc0b3;
@@ -64,17 +85,20 @@ $cell-width: ($board-width - ($gutter * ($num-cells + 1))) / $num-cells;
 	color: #776e65;
 }
 
-.cell-8, .cell-16, .cell-32, .cell-64, .cell--2, .cell-128, .cell-256, .cell-512 {
+.cell-8,
+.cell-16,
+.cell-32,
+.cell-64,
+.cell--2,
+.cell-128,
+.cell-256,
+.cell-512 {
 	color: #f9f6f2;
 }
 
 .cell-2 {
 	background-color: #eee4da;
 }
-
-/* .cell--2 { */
-/* 	background-color: #776e65; */
-/* } */
 
 .cell-4 {
 	background-color: #ede0c8;

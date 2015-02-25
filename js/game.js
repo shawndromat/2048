@@ -1,9 +1,10 @@
 (function(root) {
 	var N = root.N = (root.N || {} );
-	var Game = N.Game = function ($rootEl) {
-		this.$rootEl = $rootEl;
-		this.board = new N.Board(4, undefined, this.$rootEl);
-		this.score = 0;
+	var Game = N.Game = function (rootEl) {
+		this.rootEl = rootEl;
+    this.scoreEl = document.getElementById('score');
+		this.board = new N.Board(this, 4, undefined, this.rootEl);
+    this.score = 0;
 	};
 
 	Game.prototype.start = function () {
@@ -24,4 +25,9 @@
 			game.board = game.board.move(direction);
 		}
 	}
+
+  Game.prototype.updateScore = function(score) {
+    this.score += score;
+    this.scoreEl.innerHTML = this.score;
+  }
 })(this);

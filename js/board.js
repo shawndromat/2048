@@ -1,6 +1,7 @@
 (function (root){
 	var N = root.N = (root.N || {});
-	var Board = N.Board = function (size, direction, el) {
+	var Board = N.Board = function (game, size, direction, el) {
+    this.game = game;
 		this.size = size;
 		this.direction = direction;
 		this.el = el;
@@ -33,7 +34,7 @@
 		return cells;
 	};
 
-	Board.prototype.move = function (direction) {
+	Board.prototype.move = function (direction, callback) {
 		this.saveCells();
 
 		switch (direction) {
@@ -52,15 +53,13 @@
 		}
 
 		this.setCells();
-    this.logCells();
 		this.render();
     setTimeout(function() {
       this.animate();
     }.bind(this), 0)
-    // document.addEventListener('transitionend', this.endMove)
     setTimeout(function() {
       this.endMove();
-    }.bind(this), 500);
+    }.bind(this), 100);
 		return this;
 	};
 
@@ -116,21 +115,22 @@
 
 	Board.prototype.performMerge = function (cell1, cell2) {
     var newCell = new N.Cell(cell1.value + cell2.value, this);
+    this.game.updateScore(cell1.value + cell2.value);
     this.oldCells.push(cell1);
     this.el.removeChild(cell2.el);
     newCell.prevPos = cell2.prevPos;
 		return newCell;
 	};
 
-  Board.prototype.logCells = function () {
-    for (var i = 0; i < this.size; i++) {
-      for (var j = 0; j < this.size; j++) {
-        if (this.cells[i][j].value > 0) {
-          console.log(this.cells[i][j].pos + " " + this.cells[i][j].value)
-        }
-      }
-    }
-  }
+  // Board.prototype.logCells = function () {
+  //   for (var i = 0; i < this.size; i++) {
+  //     for (var j = 0; j < this.size; j++) {
+  //       if (this.cells[i][j].value > 0) {
+  //         console.log(this.cells[i][j].pos + " " + this.cells[i][j].value)
+  //       }
+  //     }
+  //   }
+  // }
 
 	Board.prototype.transpose = function () {
 		var transposed = [];
