@@ -2,25 +2,16 @@ import Cell from "./Cell"
 import Row from "./Row"
 import {flatten, sample, difference, sortBy} from "lodash"
 
-function allCoordinates() {
-  return flatten(
-    [0, 1, 2, 3].map(x => {
-      return [0, 1, 2, 3].map(y => {
-        return [x, y]
-      })
-    })
-  )
-}
-
 export default class Game {
-  constructor(cells) {
+  constructor(initialCells) {
     this.score = 0
-    this.cells = cells || this.initializeCells()
-    this.initializeCells(cells)
+    this.cells = initialCells || []
   }
 
-  initializeCells(initialSquares) {
-    return [new Cell(0, 0), new Cell(0, 1)]
+  setup() {
+    while (this.cells.length < 2) {
+      this.generateRandomCell()
+    }
   }
 
   moveRight() {
@@ -60,15 +51,15 @@ export default class Game {
 
   generateRandomCell() {
     const newCoordinates = sample(this.getFreeCoordinates())
-    this.cells.push(new Cell(newCoordinates))
+    this.cells.push(new Cell( ...newCoordinates, 2))
   }
 
   getFreeCoordinates() {
-    return difference(allCoordinates(), this.occupiedCoordinates())
+    return difference(this.allCoordinates(), this.occupiedCoordinates())
   }
 
   occupiedCoordinates() {
-    return this.cells.map(cell => cell.coordinates)
+    return this.cells.map(cell => [cell.rowNum, cell.colNum])
   }
 
   calculateGameStatus() {
@@ -80,5 +71,15 @@ export default class Game {
     if (highestValue === 2048) {
       this.status = "WINNER"
     }
+  }
+
+  allCoordinates() {
+    return flatten(
+      [0, 1, 2, 3].map(x => {
+        return [0, 1, 2, 3].map(y => {
+          return [x, y]
+        })
+      })
+    )
   }
 }

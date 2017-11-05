@@ -5,34 +5,34 @@ $cell-width: ($board-width - ($gutter * ($num-cells + 1))) / $num-cells;
 $text-color: #776e65;
 
 html {
-	font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
   background-color: #faf8ef;
   color: $text-color;
 }
 
 #board {
-	margin: 30px auto;
-	width: $board-width;
-	height: $board-width;
-	background-color: #bbada0;
-	border-radius: 10px;
+  margin: 30px auto;
+  width: $board-width;
+  height: $board-width;
+  background-color: #bbada0;
+  border-radius: 10px;
   position: relative;
   z-index: -5;
 }
 
 .cell {
   position: absolute;
-	width: $cell-width;
-	height: $cell-width;
-	text-align: center;
-	font-size: 55px;
+  width: $cell-width;
+  height: $cell-width;
+  text-align: center;
+  font-size: 55px;
   font-weight: bold;
-	border-radius: 5px;
+  border-radius: 5px;
   transition: left .1s ease-in-out, top .1s ease-in-out;
 }
 
-.cell p{
-	margin-top: 15px;
+.cell p {
+  margin-top: 15px;
 }
 
 header {
@@ -75,14 +75,13 @@ h1 {
   }
 }
 
-
 .cell-0 {
-	background-color: #ccc0b3;
+  background-color: #ccc0b3;
   z-index: -3;
 }
 
 .cell-2, .cell-4 {
-	color: #776e65;
+  color: #776e65;
 }
 
 .cell-8,
@@ -93,45 +92,79 @@ h1 {
 .cell-128,
 .cell-256,
 .cell-512 {
-	color: #f9f6f2;
+  color: #f9f6f2;
 }
 
 .cell-2 {
-	background-color: #eee4da;
+  background-color: #eee4da;
+  &::before {
+    content: "2";
+  }
 }
 
 .cell-4 {
-	background-color: #ede0c8;
+  background-color: #ede0c8;
+  &::before {
+    content: "4";
+  }
 }
 
 .cell-8 {
-	background-color: #f1b179;
+  background-color: #f1b179;
+  &::before {
+    content: "8";
+  }
 }
 
 .cell-16 {
-	background-color: #f59563;
+  background-color: #f59563;
+  &::before {
+    content: "16";
+  }
 }
 
 .cell-32 {
-	background-color: #f67b5f;
+  background-color: #f67b5f;
+  &::before {
+    content: "32";
+  }
 }
 
 .cell-64 {
-	background-color: #f65e3b;
+  background-color: #f65e3b;
+  &::before {
+    content: "64";
+  }
 }
 
 .cell-128 {
-	background-color: #edcf72;
+  background-color: #edcf72;
+  &::before {
+    content: "128";
+  }
 }
 
 .cell-256 {
-	background: #edcc61;
-	box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.31746),
-						inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+  background: #edcc61;
+  box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.31746),
+  inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+  &::before {
+    content: "256";
+  }
 }
 
 .cell-512 {
-	background-color: #edc850;
-	box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.39683),
-						 inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+  background-color: #edc850;
+  box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.39683),
+  inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+  &::before {
+    content: "512";
+  }
+}
+
+.cell::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }

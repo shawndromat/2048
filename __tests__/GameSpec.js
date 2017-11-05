@@ -13,6 +13,7 @@ describe("Game", () => {
   })
 
   it("should initialize with 2 cells populated", () => {
+    game.setup()
     expect(game.cells.length).toEqual(2)
   })
 

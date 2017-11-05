@@ -19,7 +19,6 @@ describe("Row", () => {
         const cells = [new Cell(rowNum, 2, 2)]
         row = new Row(cells)
         expect(scootedCells().length).toEqual(1)
-        console.log(scootedCells())
         expect(findCellAtCoordinate(scootedCells(), rowNum, 3).value).toEqual(2)
       })
     })
