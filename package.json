@@ -1,0 +1,40 @@
+{
+  "name": "2048",
+  "description": "a clone of my favorite casual game",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shawndromat/2048"
+  },
+  "scripts": {
+    "dev": "webpack -d --watch",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "author": "Shawna Mattison",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.3",
+    "jest": "^21.2.1",
+    "redux-devtools": "^3.4.0",
+    "webpack": "^3.6.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "./enzymeConfiguration.js"
+    ]
+  }
+}
