@@ -34,7 +34,7 @@ export default class GameGui extends Component {
 
   printCells() {
     return this.props.game.cells.map((cell, index) => {
-      return <div key={index + 16}
+      return <div key={cell.uuid}
                   className={`cell cell-${cell.value} pos-${cell.rowNum}-${cell.colNum}`}>
       </div>
     })

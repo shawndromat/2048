@@ -10,7 +10,7 @@ export default class Row {
     const sortedCells = sortBy(this.cells, cell => - cell.colNum)
 
     return this.mergeCells(sortedCells).map((cell, index) => {
-      return new Cell(cell.rowNum, 3 - index, cell.value)
+      return cell.cloneTo(cell.rowNum, 3 - index)
     })
   }
 
@@ -18,7 +18,7 @@ export default class Row {
     const sortedCells = sortBy(this.cells, cell => cell.colNum)
 
     return this.mergeCells(sortedCells).map((cell, index) => {
-      return new Cell(cell.rowNum, index, cell.value)
+      return cell.cloneTo(cell.rowNum, index)
     })
   }
 
@@ -26,7 +26,7 @@ export default class Row {
     const sortedCells = sortBy(this.cells, cell => cell.rowNum)
 
     return this.mergeCells(sortedCells).map((cell, index) => {
-      return new Cell(index, cell.colNum, cell.value)
+      return cell.cloneTo(index, cell.colNum)
     })
   }
 
@@ -34,7 +34,7 @@ export default class Row {
     const sortedCells = sortBy(this.cells, cell => - cell.rowNum)
 
     return this.mergeCells(sortedCells).map((cell, index) => {
-      return new Cell(3 - index, cell.colNum, cell.value)
+      return cell.cloneTo(3 - index, cell.colNum)
     })
   }
 
@@ -45,7 +45,7 @@ export default class Row {
 
     while(first) {
       if (second && first.value === second.value) {
-        newCells.push(new Cell(first.rowNum, first.colNum, first.value * 2))
+        newCells.push(first.double())
         first = sortedCells.shift() || null
         second = sortedCells.shift() || null
       } else {

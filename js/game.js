@@ -22,7 +22,7 @@
 	Game.prototype.handler = function (direction) {
 		var game = this;
 		return function () {
-			game.board = game.board.move(direction);
+			game.board = game.board.cloneTo(direction);
 		}
 	}
 
