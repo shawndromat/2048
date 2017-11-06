@@ -55,7 +55,7 @@ describe("Game", () => {
       ])
     })
 
-    it("should win when any cell value reaches 2048", () => {
+    it("should lose when the grid is full", () => {
       game.moveRight()
       expect(game.status).toEqual("LOSER")
     })

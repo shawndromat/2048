@@ -1,6 +1,6 @@
 import Cell from "./Cell"
 import Row from "./Row"
-import {flatten, sample, difference, sortBy} from "lodash"
+import {flatten, sample, differenceWith, sortBy, isEqual} from "lodash"
 
 export default class Game {
   constructor(initialCells) {
@@ -50,12 +50,13 @@ export default class Game {
   }
 
   generateRandomCell() {
-    const newCoordinates = sample(this.getFreeCoordinates())
+    if (this.status === "LOSER") return
+    const newCoordinates = sample(this.freeCoordinates())
     this.cells.push(new Cell( ...newCoordinates, 2))
   }
 
-  getFreeCoordinates() {
-    return difference(this.allCoordinates(), this.occupiedCoordinates())
+  freeCoordinates() {
+    return differenceWith(this.allCoordinates(), this.occupiedCoordinates(), isEqual)
   }
 
   occupiedCoordinates() {
