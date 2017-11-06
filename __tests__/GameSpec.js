@@ -90,6 +90,7 @@ describe("Game", () => {
          _ _ _ _
        */
       expect(cellAtCoordinates(0, 3).value).toEqual(4)
+      expect(game.score).toEqual(4)
     })
 
     it("can scoot left", () => {
@@ -101,6 +102,7 @@ describe("Game", () => {
          _ _ _ _
        */
       expect(cellAtCoordinates(0, 0).value).toEqual(4)
+      expect(game.score).toEqual(4)
     })
 
     it("can scoot up", () => {
@@ -113,6 +115,7 @@ describe("Game", () => {
        */
       expect(cellAtCoordinates(0, 0).value).toEqual(2)
       expect(cellAtCoordinates(0, 1).value).toEqual(2)
+      expect(game.score).toEqual(0)
     })
 
     it("can scoot down", () => {
@@ -125,6 +128,7 @@ describe("Game", () => {
        */
       expect(cellAtCoordinates(3, 0).value).toEqual(2)
       expect(cellAtCoordinates(3, 1).value).toEqual(2)
+      expect(game.score).toEqual(0)
     })
   })
 

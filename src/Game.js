@@ -1,6 +1,6 @@
 import Cell from "./Cell"
 import Row from "./Row"
-import {flatten, sample, differenceWith, sortBy, isEqual} from "lodash"
+import {flatten, flatMap, sample, differenceWith, sortBy, isEqual, sumBy} from "lodash"
 
 export default class Game {
   constructor(initialCells) {
@@ -31,8 +31,9 @@ export default class Game {
   }
 
   move(lines, howToScoot) {
-    const scootedCells = flatten(lines.map(howToScoot))
-    this.cells = scootedCells
+    lines.forEach(howToScoot)
+    this.cells = flatMap(lines, line => line.scootedCells)
+    this.score += sumBy(lines, line => line.score)
     this.calculateGameStatus()
     this.generateRandomCell()
   }

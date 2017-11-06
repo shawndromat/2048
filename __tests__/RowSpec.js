@@ -11,15 +11,15 @@ describe("Row", () => {
     describe("scoot right", () => {
       describe("when row is empty", () => {
         it("returns empty cells", () => {
-          scootCellsRight([])
-          expect(scootedCells).toEqual([])
+          whenRowIsScootedRight([])
+          expect(row.scootedCells).toEqual([])
         })
       })
 
       describe("when there is one cell", () => {
         it("scoots the cell all the way to the end", () => {
-          scootCellsRight([new Cell(rowNum, 2, 2)])
-          expect(scootedCells.length).toEqual(1)
+          whenRowIsScootedRight([new Cell(rowNum, 2, 2)])
+          expect(row.scootedCells.length).toEqual(1)
           expect(cellAt(rowNum, 3).value).toEqual(2)
         })
       })
@@ -27,8 +27,8 @@ describe("Row", () => {
       describe("when there are multiple cells", () => {
         describe("when the cells cannot be merged", () => {
           it("scoots the cells all the way to the end", () => {
-            scootCellsRight([new Cell(rowNum, 2, 2), new Cell(rowNum, 1, 4)])
-            expect(scootedCells.length).toEqual(2)
+            whenRowIsScootedRight([new Cell(rowNum, 2, 2), new Cell(rowNum, 1, 4)])
+            expect(row.scootedCells.length).toEqual(2)
             expect(cellAt(rowNum, 3).value).toEqual(2)
             expect(cellAt(rowNum, 2).value).toEqual(4)
           })
@@ -38,11 +38,11 @@ describe("Row", () => {
           const cells = [new Cell(rowNum, 2, 2), new Cell(rowNum, 1, 2)]
 
           beforeEach(() => {
-            scootCellsRight(cells)
+            whenRowIsScootedRight(cells)
           })
 
           it("scoots the cells all the way to the end", () => {
-            expect(scootedCells.length).toEqual(1)
+            expect(row.scootedCells.length).toEqual(1)
             expect(cellAt(rowNum, 3).value).toEqual(4)
           })
 
@@ -50,14 +50,19 @@ describe("Row", () => {
             expect(cellAt(rowNum, 3).uuid).toMatch(cells[0].uuid)
           })
 
+          it("counts the score", () => {
+            expect(row.score).toEqual(4)
+          })
+
           it("handles multiple merges", () => {
-            scootCellsRight([
+            whenRowIsScootedRight([
               new Cell(rowNum, 0, 2), new Cell(rowNum, 1, 2),
               new Cell(rowNum, 2, 2), new Cell(rowNum, 3, 2)
             ])
-            expect(scootedCells.length).toEqual(2)
+            expect(row.scootedCells.length).toEqual(2)
             expect(cellAt(rowNum, 3).value).toEqual(4)
             expect(cellAt(rowNum, 2).value).toEqual(4)
+            expect(row.score).toEqual(8)
           })
         })
       })
@@ -66,15 +71,15 @@ describe("Row", () => {
     describe("scoot left", () => {
       describe("when row is empty", () => {
         it("returns empty cells", () => {
-          scootCellsLeft([])
-          expect(scootedCells).toEqual([])
+          whenRowIsScootedLeft([])
+          expect(row.scootedCells).toEqual([])
         })
       })
 
       describe("when there is one cell", () => {
         it("scoots the cell all the way to the end", () => {
-          scootCellsLeft([new Cell(rowNum, 2, 2)])
-          expect(scootedCells.length).toEqual(1)
+          whenRowIsScootedLeft([new Cell(rowNum, 2, 2)])
+          expect(row.scootedCells.length).toEqual(1)
           expect(cellAt(rowNum, 0).value).toEqual(2)
         })
       })
@@ -82,8 +87,8 @@ describe("Row", () => {
       describe("when there are multiple cells", () => {
         describe("when the cells cannot be merged", () => {
           it("scoots the cells all the way to the end", () => {
-            scootCellsLeft([new Cell(rowNum, 2, 2), new Cell(rowNum, 1, 4)])
-            expect(scootedCells.length).toEqual(2)
+            whenRowIsScootedLeft([new Cell(rowNum, 2, 2), new Cell(rowNum, 1, 4)])
+            expect(row.scootedCells.length).toEqual(2)
             expect(cellAt(rowNum, 1).value).toEqual(2)
             expect(cellAt(rowNum, 0).value).toEqual(4)
           })
@@ -91,8 +96,8 @@ describe("Row", () => {
 
         describe("when the cells can be merged", () => {
           it("scoots the cells all the way to the end", () => {
-            scootCellsLeft([new Cell(rowNum, 2, 2), new Cell(rowNum, 1, 2)])
-            expect(scootedCells.length).toEqual(1)
+            whenRowIsScootedLeft([new Cell(rowNum, 2, 2), new Cell(rowNum, 1, 2)])
+            expect(row.scootedCells.length).toEqual(1)
             expect(cellAt(rowNum, 0).value).toEqual(4)
           })
         })
@@ -106,15 +111,15 @@ describe("Row", () => {
     describe("scoot up", () => {
       describe("when row is empty", () => {
         it("returns empty cells", () => {
-          scootCellsUp([])
-          expect(scootedCells).toEqual([])
+          whenRowIsScootedUp([])
+          expect(row.scootedCells).toEqual([])
         })
       })
 
       describe("when there is one cell", () => {
         it("scoots the cell all the way to the end", () => {
-          scootCellsUp([new Cell(1, colNum, 2)])
-          expect(scootedCells.length).toEqual(1)
+          whenRowIsScootedUp([new Cell(1, colNum, 2)])
+          expect(row.scootedCells.length).toEqual(1)
           expect(cellAt(0, colNum).value).toEqual(2)
         })
       })
@@ -122,8 +127,8 @@ describe("Row", () => {
       describe("when there are multiple cells", () => {
         describe("when the cells cannot be merged", () => {
           it("scoots the cells all the way to the end", () => {
-            scootCellsUp([new Cell(2, colNum, 2), new Cell(1, colNum, 4)])
-            expect(scootedCells.length).toEqual(2)
+            whenRowIsScootedUp([new Cell(2, colNum, 2), new Cell(1, colNum, 4)])
+            expect(row.scootedCells.length).toEqual(2)
             expect(cellAt(1, colNum).value).toEqual(2)
             expect(cellAt(0, colNum).value).toEqual(4)
           })
@@ -131,8 +136,8 @@ describe("Row", () => {
 
         describe("when the cells can be merged", () => {
           it("scoots the cells all the way to the end", () => {
-            scootCellsUp([new Cell(2, colNum, 2), new Cell(1, colNum, 2)])
-            expect(scootedCells.length).toEqual(1)
+            whenRowIsScootedUp([new Cell(2, colNum, 2), new Cell(1, colNum, 2)])
+            expect(row.scootedCells.length).toEqual(1)
             expect(cellAt(0, colNum).value).toEqual(4)
           })
         })
@@ -142,15 +147,15 @@ describe("Row", () => {
     describe("scoot down", () => {
       describe("when row is empty", () => {
         it("returns empty cells", () => {
-          scootCellsDown([])
-          expect(scootedCells).toEqual([])
+          whenRowIsScootedDown([])
+          expect(row.scootedCells).toEqual([])
         })
       })
 
       describe("when there is one cell", () => {
         it("scoots the cell all the way to the end", () => {
-          scootCellsDown([new Cell(1, colNum, 2)])
-          expect(scootedCells.length).toEqual(1)
+          whenRowIsScootedDown([new Cell(1, colNum, 2)])
+          expect(row.scootedCells.length).toEqual(1)
           expect(cellAt(3, colNum).value).toEqual(2)
         })
       })
@@ -158,8 +163,8 @@ describe("Row", () => {
       describe("when there are multiple cells", () => {
         describe("when the cells cannot be merged", () => {
           it("scoots the cells all the way to the end", () => {
-            scootCellsDown([new Cell(2, colNum, 2), new Cell(1, colNum, 4)])
-            expect(scootedCells.length).toEqual(2)
+            whenRowIsScootedDown([new Cell(2, colNum, 2), new Cell(1, colNum, 4)])
+            expect(row.scootedCells.length).toEqual(2)
             expect(cellAt(3, colNum).value).toEqual(2)
             expect(cellAt(2, colNum).value).toEqual(4)
           })
@@ -167,8 +172,8 @@ describe("Row", () => {
 
         describe("when the cells can be merged", () => {
           it("scoots the cells all the way to the end", () => {
-            scootCellsDown([new Cell(2, colNum, 2), new Cell(1, colNum, 2)])
-            expect(scootedCells.length).toEqual(1)
+            whenRowIsScootedDown([new Cell(2, colNum, 2), new Cell(1, colNum, 2)])
+            expect(row.scootedCells.length).toEqual(1)
             expect(cellAt(3, colNum).value).toEqual(4)
           })
         })
@@ -176,28 +181,28 @@ describe("Row", () => {
     })
   })
 
-  function scootCellsRight(cells) {
+  function whenRowIsScootedRight(cells) {
     row = new Row(cells)
-    scootedCells = row.scootRight()
+    row.scootRight()
   }
 
-  function scootCellsLeft(cells) {
+  function whenRowIsScootedLeft(cells) {
     row = new Row(cells)
-    scootedCells = row.scootLeft()
+    row.scootLeft()
   }
 
-  function scootCellsUp(cells) {
+  function whenRowIsScootedUp(cells) {
     row = new Row(cells)
-    scootedCells = row.scootUp()
+    row.scootUp()
   }
 
-  function scootCellsDown(cells) {
+  function whenRowIsScootedDown(cells) {
     row = new Row(cells)
-    scootedCells = row.scootDown()
+    row.scootDown()
   }
 
   function cellAt(rowNum, colNum) {
-    return scootedCells
+    return row.scootedCells
       .find(cell => cell.rowNum === rowNum && cell.colNum === colNum)
   }
 })

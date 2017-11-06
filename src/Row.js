@@ -1,39 +1,35 @@
-import Cell from "./Cell"
 import { sortBy } from "lodash"
 
 export default class Row {
   constructor(cells) {
     this.cells = Array.from(cells)
+    this.score = 0
   }
 
   scootRight() {
-    const sortedCells = sortBy(this.cells, cell => - cell.colNum)
-
-    return this.mergeCells(sortedCells).map((cell, index) => {
+    const sortedCells = this.sortCells(cell => - cell.colNum)
+    this.scootedCells = this.mergeCells(sortedCells).map((cell, index) => {
       return cell.cloneTo(cell.rowNum, 3 - index)
     })
   }
 
   scootLeft() {
-    const sortedCells = sortBy(this.cells, cell => cell.colNum)
-
-    return this.mergeCells(sortedCells).map((cell, index) => {
+    const sortedCells = this.sortCells(cell => cell.colNum)
+    this.scootedCells = this.mergeCells(sortedCells).map((cell, index) => {
       return cell.cloneTo(cell.rowNum, index)
     })
   }
 
   scootUp() {
-    const sortedCells = sortBy(this.cells, cell => cell.rowNum)
-
-    return this.mergeCells(sortedCells).map((cell, index) => {
+    const sortedCells = this.sortCells(cell => cell.rowNum)
+    this.scootedCells = this.mergeCells(sortedCells).map((cell, index) => {
       return cell.cloneTo(index, cell.colNum)
     })
   }
 
   scootDown() {
-    const sortedCells = sortBy(this.cells, cell => - cell.rowNum)
-
-    return this.mergeCells(sortedCells).map((cell, index) => {
+    const sortedCells = this.sortCells(cell => - cell.rowNum)
+    this.scootedCells = this.mergeCells(sortedCells).map((cell, index) => {
       return cell.cloneTo(3 - index, cell.colNum)
     })
   }
@@ -45,6 +41,7 @@ export default class Row {
 
     while(first) {
       if (second && first.value === second.value) {
+        this.score += first.value * 2
         newCells.push(first.double())
         first = sortedCells.shift() || null
         second = sortedCells.shift() || null
@@ -56,5 +53,9 @@ export default class Row {
     }
 
     return newCells
+  }
+
+  sortCells(howToSort) {
+    return sortBy(this.cells, howToSort)
   }
 }
